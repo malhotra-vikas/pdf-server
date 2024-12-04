@@ -5,8 +5,24 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import 'dotenv/config';
+import cors from 'cors';
+
+const allowedOrigins = ['http://localhost:3001', 'https://ai.dealingwithdebt.org', 'https://ai.dealingwithdebt.org:3001'];
 
 const app = express();
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions));
 
 // Get the PORT from the environment variable, default to 3150 if not available
 const PORT = process.env.PORT;
