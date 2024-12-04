@@ -16,39 +16,46 @@ const creditCardPayoffReportsFolder = "credit-card-payoff-reports"
 
 // Ensure the directory for storing the PDFs exists
 const storageDir = path.join(__dirname, creditCardPayoffReportsFolder);
-if (!fs.existsSync(storageDir)){
-  fs.mkdirSync(storageDir);
+if (!fs.existsSync(storageDir)) {
+    fs.mkdirSync(storageDir);
 }
 
 // Configure storage using Multer
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, creditCardPayoffReportsFolder); // save files in the 'stored-pdfs' directory
-  },
-  filename: (req, file, cb) => {
-    const fileExt = path.extname(file.originalname); // Extract the file extension
-    const uniqueId = uuidv4(); // Generate a unique identifier
-    cb(null, `${uniqueId}${fileExt}`); // Append the extension to the UUID
-  }
+    destination: (req, file, cb) => {
+        console.log(`Multer saved`);  // Log the path where the file is saved
+
+        cb(null, storageDir); // save files in the 'stored-pdfs' directory
+    },
+    filename: (req, file, cb) => {
+        const fileExt = path.extname(file.originalname); // Extract the file extension
+        const uniqueId = uuidv4(); // Generate a unique identifier
+        console.log(`File multer saved as: ${uniqueId}${fileExt}`);  // Log the path where the file is saved
+
+        cb(null, `${uniqueId}${fileExt}`); // Append the extension to the UUID
+    }
 });
 
 const upload = multer({ storage: storage });
 
 // Route to upload a PDF
 app.post('/upload-pdf', upload.single('pdf'), (req, res) => {
-  res.json({ link: `http://localhost:${PORT}/download-pdf/${req.file.filename}` });
+    console.log(`File saved at: ${req.file.path}`);  // Log the path where the file is saved
+    res.json({ link: `http://localhost:${PORT}/download-pdf/${req.file.filename}` });
 });
 
 // Route to download a PDF
 app.get('/download-pdf/:filename', (req, res) => {
-  const filePath = path.join(__dirname, 'stored-pdfs', req.params.filename);
-  res.download(filePath, (err) => {
-    if (err) {
-      res.status(404).send('File not found.');
-    }
-  });
+    const filePath = path.join(__dirname, creditCardPayoffReportsFolder, req.params.filename);
+    console.log(`Attempting to download file from: ${filePath}`);  // Log the path used for download
+
+    res.download(filePath, (err) => {
+        if (err) {
+            res.status(404).send('File not found.');
+        }
+    });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });
