@@ -4,9 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import 'dotenv/config';
 
 const app = express();
-const PORT = 3150;
+
+// Get the PORT from the environment variable, default to 3150 if not available
+const PORT = process.env.PORT;
+const HOST = process.env.HOST;  // Default to 'localhost' if not specified
 
 // Deriving __dirname in ES Module
 const __filename = fileURLToPath(import.meta.url);
