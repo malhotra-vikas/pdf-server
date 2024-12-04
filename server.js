@@ -61,7 +61,7 @@ const upload = multer({ storage: storage });
 // Route to upload a PDF
 app.post('/upload-pdf', upload.single('pdf'), (req, res) => {
     console.log(`File saved at: ${req.file.path}`);  // Log the path where the file is saved
-    res.json({ link: `http://localhost:${PORT}/download-pdf/${req.file.filename}` });
+    res.json({ link: `http://${HOST}:${PORT}/download-pdf/${req.file.filename}` });
 });
 
 // Route to download a PDF
@@ -77,5 +77,5 @@ app.get('/download-pdf/:filename', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server running on http://${PORT}:${PORT}`);
 });

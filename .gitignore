@@ -1,3 +1,5 @@
 node_modules
 credit-card-payoff-reports
 .env
+.DS_Store
+package-lock.json
