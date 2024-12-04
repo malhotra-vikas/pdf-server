@@ -77,5 +77,5 @@ app.get('/download-pdf/:filename', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on http://${PORT}:${PORT}`);
+    console.log(`Server running on http://${HOST}:${PORT}`);
 });
