@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 import 'dotenv/config';
 import cors from 'cors';
 
-const allowedOrigins = ['http://localhost:3001', 'https://ai.dealingwithdebt.org', 'https://ai.dealingwithdebt.org:3001'];
+const allowedOrigins = ['http://localhost', 'http://localhost:3000', 'http://localhost:3001', 'https://ai.dealingwithdebt.org', 'https://ai.dealingwithdebt.org:3001'];
 
 const app = express();
 
