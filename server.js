@@ -61,7 +61,7 @@ const upload = multer({ storage: storage });
 // Route to upload a PDF
 app.post('/upload-pdf', upload.single('pdf'), (req, res) => {
     console.log(`File saved at: ${req.file.path}`);  // Log the path where the file is saved
-    res.json({ link: `http://${HOST}:${PORT}/download-pdf/${req.file.filename}` });
+    res.json({ link: `https://ai.dealingwithdebt.org/download-pdf/${req.file.filename}` });
 });
 
 // Route to download a PDF
